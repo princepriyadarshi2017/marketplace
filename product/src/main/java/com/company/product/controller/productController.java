@@ -32,7 +32,7 @@ public class productController {
         if (!existingProduct.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        productModel.setId(id); // Ensure the correct ID is set
+        productModel.setId(id);
         productRepository.save(productModel);
         return ResponseEntity.ok(productModel);
     }
