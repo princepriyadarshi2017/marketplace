@@ -4,6 +4,8 @@ package com.company.product.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @AllArgsConstructor
@@ -14,6 +16,14 @@ import lombok.*;
 public class ProductModel {
     @Id
     private Long id;
-    private String name;
+    private String service;
+    private int netprice;
+    private int mrp;
+    private LocalDateTime created;
+
+    @PrePersist
+    public void prePersist() {
+        this.created = LocalDateTime.now();
+    }
 
 }
