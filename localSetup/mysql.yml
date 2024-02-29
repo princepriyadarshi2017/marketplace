@@ -8,10 +8,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: products
-    networks:
-      - my_network
-    group_add:
-      - my_group
+    ports:
+      - 3308:3306
+
 
   mysql2:
     image: mysql:latest
@@ -20,12 +19,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: inventory
-    networks:
-      - my_network
-    group_add:
-      - my_group
+    ports:
+      - 3307:3306
 
-networks:
-  my_network:
 
 
