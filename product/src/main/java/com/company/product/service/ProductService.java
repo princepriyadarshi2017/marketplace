@@ -79,24 +79,24 @@ try {
 
     }
 
-    public List<ProductModel> getFirst25Products() {
-        return productRepository.findAll(PageRequest.of(0, 25)).getContent();
-    }
 
     public int getTotalProductsCount() {
         return (int) productRepository.count();
     }
 
-    public ResponseEntity<ProductListResponse> getAllProducts() {
-        List<ProductModel> list = getFirst25Products();
+    public ResponseEntity<ProductListResponse> getAllProducts(int offset, int limit) {
+        List<ProductModel> list = productRepository.findAll(PageRequest.of(offset/limit, limit)).getContent();
+
         if (list.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
             int totalRecords = getTotalProductsCount();
-            int remainingRecords = totalRecords - list.size();
+            int remainingRecords = totalRecords - (offset + limit);
+            int nextOffset = offset + limit;
+            int nextLimit = limit;
             String nextLink = null;
             if (remainingRecords > 0) {
-                nextLink = "/api/products?offset=" + (totalRecords - remainingRecords);
+                nextLink = "/product/getProduct?offset=" + nextOffset + "&limit=" + nextLimit;
             }
             ProductListResponse response = new ProductListResponse();
             response.setProducts(list);
@@ -104,6 +104,7 @@ try {
             return ResponseEntity.ok(response);
         }
     }
+
 
 
 }

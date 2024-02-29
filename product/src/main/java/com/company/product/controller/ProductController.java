@@ -17,9 +17,9 @@ public class ProductController {
         this.productService = productService;
     }
     @GetMapping("/getProduct")
-    public ResponseEntity<ProductListResponse> getAllProducts() {
+    public ResponseEntity<ProductListResponse> getAllProducts(@RequestParam(defaultValue = "0") int offset, @RequestParam(defaultValue = "25") int limit) {
 
-            return productService.getAllProducts();
+            return productService.getAllProducts(offset,limit);
     }
 
     @PostMapping("/createProduct")
