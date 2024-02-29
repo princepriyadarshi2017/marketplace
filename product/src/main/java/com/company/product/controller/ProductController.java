@@ -1,28 +1,25 @@
 package com.company.product.controller;
 
 
+import com.company.product.model.ProductListResponse;
 import com.company.product.model.ProductModel;
 import com.company.product.service.ProductService;
-import com.company.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/product")
-public class productController {
+public class ProductController {
 
-
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private ProductRepository productRepository;
-
+    private final ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
     @GetMapping("/getProduct")
-    public List<ProductModel> getAllProducts() {
-        return productRepository.findAll();
+    public ResponseEntity<ProductListResponse> getAllProducts() {
+
+            return productService.getAllProducts();
     }
 
     @PostMapping("/createProduct")

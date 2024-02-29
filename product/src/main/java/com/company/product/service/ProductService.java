@@ -1,15 +1,19 @@
 package com.company.product.service;
 
 
+import com.company.product.Product;
+import com.company.product.model.ProductListResponse;
 import com.company.product.model.ProductModel;
 import com.company.product.repository.ProductRepository;
 import jakarta.transaction.SystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +23,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
+
         this.productRepository = productRepository;
     }
 
@@ -72,6 +77,32 @@ try {
             throw new RuntimeException("Failed to delete ",e);
         }
 
+    }
+
+    public List<ProductModel> getFirst25Products() {
+        return productRepository.findAll(PageRequest.of(0, 25)).getContent();
+    }
+
+    public int getTotalProductsCount() {
+        return (int) productRepository.count();
+    }
+
+    public ResponseEntity<ProductListResponse> getAllProducts() {
+        List<ProductModel> list = getFirst25Products();
+        if (list.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            int totalRecords = getTotalProductsCount();
+            int remainingRecords = totalRecords - list.size();
+            String nextLink = null;
+            if (remainingRecords > 0) {
+                nextLink = "/api/products?offset=" + (totalRecords - remainingRecords);
+            }
+            ProductListResponse response = new ProductListResponse();
+            response.setProducts(list);
+            response.setNext(nextLink);
+            return ResponseEntity.ok(response);
+        }
     }
 
 
