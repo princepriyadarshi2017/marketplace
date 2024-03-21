@@ -4,7 +4,6 @@ package com.company.product.controller;
 import com.company.product.model.ProductListResponse;
 import com.company.product.model.ProductModel;
 import com.company.product.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

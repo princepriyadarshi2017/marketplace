@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # MySQL Docker container settings
-DOCKER_CONTAINER_NAME="my-mysql"
+DOCKER_CONTAINER_NAME="product_mysql"
 MYSQL_USER="root"
 MYSQL_PASSWORD="admin"
 

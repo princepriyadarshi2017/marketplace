@@ -1,18 +1,15 @@
 package com.company.product.service;
 
 
-import com.company.product.Product;
 import com.company.product.model.ProductListResponse;
 import com.company.product.model.ProductModel;
 import com.company.product.repository.ProductRepository;
-import jakarta.transaction.SystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
